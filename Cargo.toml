@@ -1,0 +1,32 @@
+[package]
+name = "blas-rs"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0 OR MIT"
+authors = ["Ling Yu <lingyu.lynn@outlook.com>"]
+description = "The package provides BLAS bindings for Rust."
+readme = "README.md"
+categories = ["science"]
+keywords = ["linear-algebra", "blas"]
+homepage = "https://github.com/shaijing/blas-rs"
+repository = "https://github.com/shaijing/blas-rs"
+
+[features]
+default = ["ilp64"]
+ilp64 = []
+lp64 = []
+openblas = []
+intel-mkl = []
+static = []
+system = []
+
+[dependencies]
+
+[target.'cfg(target_os="windows")'.build-dependencies]
+vcpkg = "0.2.15"
+
+[build-dependencies]
+pkg-config = "0.3.32"
+
+[package.metadata.docs.rs]
+rustdoc-args = ["--html-in-header", "assets/katex-header.html"]
