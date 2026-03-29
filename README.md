@@ -8,13 +8,15 @@ The following implementations are available:
 
 - `openblas`, which is the one in [OpenBLAS]
 
+- `netlib`, which is the reference implementation of BLAS in [Netlib]
+
 ## Supported Platforms
 
 | Blas       | Windows      | Linux      | macOS      |
 | :------    | :------------: | :----------: | :----------: |
-| `intel-mkl`  |     ✅       |            |            |
-| `openblas`   |     ✅       |            |            |
-| `netlib`     |              |            |            |
+| `intel-mkl`  |     ✅       |     ✅       |            |
+| `openblas`   |     ✅       |     ✅       |            |
+| `netlib`     |              |     ✅       |            |
 | `accelerate` |              |            |            |
 
 
@@ -32,3 +34,4 @@ You must comply with the licenses of these libraries when using this crate.
 
 [intel mkl]: https://software.intel.com/en-us/mkl
 [openblas]: https://github.com/OpenMathLib/OpenBLAS
+[netlib]: http://www.netlib.org/blas/

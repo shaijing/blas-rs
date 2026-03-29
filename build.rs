@@ -4,59 +4,90 @@ fn feature_enabled(feature: &str) -> bool {
     env::var(format!("CARGO_FEATURE_{}", feature.to_uppercase())).is_ok()
 }
 
-fn windows() {
-    let target_env =
-        std::env::var("CARGO_CFG_TARGET_ENV").expect("Error: can't get target_env from cargo!");
-    match target_env.as_str() {
-        "msvc" => windows_msvc_system(),
-        "gnu" => windows_gnu_system(),
-        _ => {
-            println!("cargo::error=unsupport env");
-        }
-    };
-}
-fn windows_msvc_system() {
-    if feature_enabled("intel_mkl") {
-        let mkl_dir = Path::new(
-            &env::var("MKLROOT")
-                .expect("MKLROOT should be set")
-                .to_string(),
-        )
-        .join("lib");
-        println!("cargo:rustc-link-search=native={}", mkl_dir.display());
-        println!("cargo:rustc-link-lib=mkl_rt");
-        println!("cargo::warning=intel-mkl used");
-    } else if feature_enabled("openblas") {
-        if !feature_enabled("static") {
+// --- Windows Platform Logic ---
+#[cfg(target_os = "windows")]
+fn build_system() {
+    #[cfg(target_env = "msvc")]
+    {
+        if feature_enabled("intel_mkl") {
+            let mkl_root = env::var("MKLROOT").expect("MKLROOT should be set");
+            let mkl_dir = Path::new(&mkl_root).join("lib");
+            println!("cargo:rustc-link-search=native={}", mkl_dir.display());
+            println!("cargo:rustc-link-lib=mkl_rt");
+            println!("cargo::warning=intel-mkl used (msvc)");
+        } else if feature_enabled("openblas") && !feature_enabled("static") {
             unsafe { env::set_var("VCPKGRS_DYNAMIC", "1") };
-            if let Ok(_) = vcpkg::find_package("openblas") {
+            if vcpkg::find_package("openblas").is_ok() {
                 println!("cargo::warning=vcpkg openblas used");
                 return;
             }
-            if let Ok(_) = pkg_config::Config::new().statik(false).probe("openblas") {
+            if pkg_config::Config::new()
+                .statik(false)
+                .probe("openblas")
+                .is_ok()
+            {
                 println!("cargo::warning=pkg_config openblas used");
                 return;
             }
         }
     }
-}
-fn windows_gnu_system() {}
-fn macos() {}
 
-fn linux() {}
+    #[cfg(target_env = "gnu")]
+    {
+        // Add Windows GNU (MinGW) logic here if needed
+        println!("cargo::warning=windows gnu detected");
+    }
+}
+
+// --- Linux Platform Logic ---
+#[cfg(target_os = "linux")]
+fn build_system() {
+    if feature_enabled("intel_mkl") {
+        let mkl_root = env::var("MKLROOT").expect("MKLROOT should be set");
+        let mkl_dir = Path::new(&mkl_root).join("lib/intel64");
+        println!("cargo:rustc-link-search=native={}", mkl_dir.display());
+        println!("cargo:rustc-link-lib=mkl_rt");
+        println!("cargo::warning=intel-mkl used (linux)");
+    } else if feature_enabled("openblas") && !feature_enabled("static") {
+        // Try native openblas first
+        if pkg_config::Config::new()
+            .statik(false)
+            .probe("openblas")
+            .is_ok()
+        {
+            println!("cargo::warning=pkg_config openblas used");
+        }
+        // Fallback to FlexiBLAS (common on Fedora/RHEL)
+        else if pkg_config::Config::new()
+            .statik(false)
+            .probe("flexiblas")
+            .is_ok()
+        {
+            println!("cargo::warning=pkg_config flexiblas used as openblas fallback");
+        } else {
+            panic!("Error: Could not find OpenBLAS or FlexiBLAS via pkg-config.");
+        }
+    }
+}
+
+// --- macOS Platform Logic ---
+#[cfg(target_os = "macos")]
+fn build_system() {
+    println!("cargo::warning=macos build logic here");
+}
+
+// --- Unsupported Platforms ---
+#[cfg(not(any(target_os = "windows", target_os = "linux", target_os = "macos")))]
+fn build_system() {
+    println!("cargo:warning=unsupported platform");
+}
 
 fn main() {
+    // Skip build logic when generating documentation on docs.rs
     if env::var("DOCS_RS").is_ok() {
         return;
     }
-    let target_os =
-        std::env::var("CARGO_CFG_TARGET_OS").expect("Error: can't get target_os from cargo!");
-    match target_os.as_str() {
-        "windows" => windows(),
-        "macos" => macos(),
-        "linux" => linux(),
-        _ => {
-            println!("cargo::error=unsupport platform");
-        }
-    };
+
+    // The compiler picks the correct build_system() version based on the target OS
+    build_system();
 }
