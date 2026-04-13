@@ -1,23 +1,57 @@
 # blas-rs
-The packages provides a BLAS binding.
 
-## Configuration
-The following implementations are available:
+This crate provides Rust FFI bindings to CBLAS (C interface to BLAS).
 
-- `intel-mkl`, which is the one in [Intel MKL]
+## Features
 
-- `openblas`, which is the one in [OpenBLAS]
-
-- `netlib`, which is the reference implementation of BLAS in [Netlib]
+- `intel-mkl` — Link against Intel MKL
+- `openblas` — Link against OpenBLAS
+- `ilp64` (default) — 64-bit integer API for large arrays
+- `lp64` — 32-bit integer API
 
 ## Supported Platforms
 
-| Blas       | Windows      | Linux      | macOS      |
-| :------    | :------------: | :----------: | :----------: |
-| `intel-mkl`  |     ✅       |     ✅       |            |
-| `openblas`   |     ✅       |     ✅       |            |
-| `netlib`     |              |     ✅       |            |
-| `accelerate` |              |            |            |
+| BLAS        | Windows | Linux | macOS |
+| :-----------| :------: | :----: | :----: |
+| `intel-mkl` |   ✅    |  ✅   |       |
+| `openblas`  |   ✅    |  ✅   |  ✅   |
+| `accelerate`|         |       |  ✅ (default) |
+
+## Usage
+
+```bash
+# macOS (default: Accelerate framework)
+cargo build
+
+# macOS with OpenBLAS (requires pkg-config)
+cargo build -F openblas
+
+# Linux with Intel MKL
+cargo build -F intel-mkl
+
+# Linux with OpenBLAS
+cargo build -F openblas
+
+# Windows with Intel MKL (requires MKLROOT)
+cargo build -F intel-mkl
+
+# Windows with OpenBLAS (requires vcpkg)
+cargo build -F openblas
+
+# Run example
+cargo run --release --example mat_blas
+```
+
+## Requirements
+
+| Platform | BLAS | Requirements |
+| :--------| :----| :------------ |
+| macOS | Accelerate | None (built-in) |
+| macOS | OpenBLAS | Install via Homebrew: `brew install openblas` |
+| Linux | Intel MKL | Set `MKLROOT` environment variable |
+| Linux | OpenBLAS | Install via package manager |
+| Windows | Intel MKL | Set `MKLROOT` environment variable |
+| Windows | OpenBLAS | Install via vcpkg: `vcpkg install openblas:x64-windows` |
 
 
 

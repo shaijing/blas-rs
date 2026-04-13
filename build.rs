@@ -1,4 +1,8 @@
-use std::{env, path::Path};
+#[cfg(any(target_os = "windows", target_os = "linux"))]
+use std::path::Path;
+
+#[allow(unused_imports)]
+use std::env;
 
 fn feature_enabled(feature: &str) -> bool {
     env::var(format!("CARGO_FEATURE_{}", feature.to_uppercase())).is_ok()
@@ -73,7 +77,21 @@ fn build_system() {
 // --- macOS Platform Logic ---
 #[cfg(target_os = "macos")]
 fn build_system() {
-    println!("cargo::warning=macos build logic here");
+    if feature_enabled("openblas") {
+        if pkg_config::Config::new()
+            .statik(false)
+            .probe("openblas")
+            .is_ok()
+        {
+            println!("cargo::warning=pkg_config openblas used");
+        } else {
+            panic!("Error: Could not find OpenBLAS via pkg-config.");
+        }
+    } else {
+        // Default: link against macOS Accelerate framework (includes BLAS)
+        println!("cargo:rustc-link-lib=framework=Accelerate");
+        println!("cargo::warning=macos Accelerate framework used");
+    }
 }
 
 // --- Unsupported Platforms ---

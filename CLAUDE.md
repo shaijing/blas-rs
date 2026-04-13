@@ -5,14 +5,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build Commands
 
 ```bash
-# Build with Intel MKL (requires MKLROOT environment variable)
+# macOS (default: Accelerate framework)
+cargo build
+
+# macOS with OpenBLAS (requires pkg-config)
+cargo build -F openblas
+
+# Linux with Intel MKL (requires MKLROOT environment variable)
 cargo build -F intel-mkl
 
-# Build with OpenBLAS (via vcpkg on Windows)
+# Linux with OpenBLAS
+cargo build -F openblas
+
+# Windows with Intel MKL (requires MKLROOT environment variable)
+cargo build -F intel-mkl
+
+# Windows with OpenBLAS (via vcpkg)
 cargo build -F openblas
 
 # Run examples
-cargo r -r -F intel-mkl --example mat_blas
+cargo run --release --example mat_blas
 
 # Run tests (requires BLAS implementation feature)
 cargo test -F intel-mkl
