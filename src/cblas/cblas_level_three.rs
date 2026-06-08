@@ -78,13 +78,13 @@ unsafe extern "C" {
         m: CBlasInt,
         n: CBlasInt,
         k: CBlasInt,
-        alpha: f32,
-        a: *const f32,
+        alpha: CBlasFloat,
+        a: *const CBlasFloat,
         lda: CBlasInt,
-        b: *const f32,
+        b: *const CBlasFloat,
         ldb: CBlasInt,
-        beta: f32,
-        c: *mut f32,
+        beta: CBlasFloat,
+        c: *mut CBlasFloat,
         ldc: CBlasInt,
     );
 
@@ -121,13 +121,13 @@ unsafe extern "C" {
         m: CBlasInt,
         n: CBlasInt,
         k: CBlasInt,
-        alpha: f64,
-        a: *const f64,
+        alpha: CBlasDouble,
+        a: *const CBlasDouble,
         lda: CBlasInt,
-        b: *const f64,
+        b: *const CBlasDouble,
         ldb: CBlasInt,
-        beta: f64,
-        c: *mut f64,
+        beta: CBlasDouble,
+        c: *mut CBlasDouble,
         ldc: CBlasInt,
     );
 
@@ -248,7 +248,7 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_chemm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         m: CBlasInt,
         n: CBlasInt,
@@ -293,7 +293,7 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_zhemm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         m: CBlasInt,
         n: CBlasInt,
@@ -340,10 +340,10 @@ unsafe extern "C" {
         trans: CBlasTranspose,
         n: CBlasInt,
         k: CBlasInt,
-        alpha: f32,
+        alpha: CBlasFloat,
         a: *const CBlasVoid,
         lda: CBlasInt,
-        beta: f32,
+        beta: CBlasFloat,
         c: *mut CBlasVoid,
         ldc: CBlasInt,
     );
@@ -381,10 +381,10 @@ unsafe extern "C" {
         trans: CBlasTranspose,
         n: CBlasInt,
         k: CBlasInt,
-        alpha: f64,
+        alpha: CBlasDouble,
         a: *const CBlasVoid,
         lda: CBlasInt,
-        beta: f64,
+        beta: CBlasDouble,
         c: *mut CBlasVoid,
         ldc: CBlasInt,
     );
@@ -427,7 +427,7 @@ unsafe extern "C" {
         lda: CBlasInt,
         b: *const CBlasVoid,
         ldb: CBlasInt,
-        beta: f32,
+        beta: CBlasFloat,
         c: *mut CBlasVoid,
         ldc: CBlasInt,
     );
@@ -470,7 +470,7 @@ unsafe extern "C" {
         lda: CBlasInt,
         b: *const CBlasVoid,
         ldb: CBlasInt,
-        beta: f64,
+        beta: CBlasDouble,
         c: *mut CBlasVoid,
         ldc: CBlasInt,
     );
@@ -502,17 +502,17 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_ssymm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f32,
-        a: *const f32,
+        alpha: CBlasFloat,
+        a: *const CBlasFloat,
         lda: CBlasInt,
-        b: *const f32,
+        b: *const CBlasFloat,
         ldb: CBlasInt,
-        beta: f32,
-        c: *mut f32,
+        beta: CBlasFloat,
+        c: *mut CBlasFloat,
         ldc: CBlasInt,
     );
 
@@ -543,17 +543,17 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_dsymm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f64,
-        a: *const f64,
+        alpha: CBlasDouble,
+        a: *const CBlasDouble,
         lda: CBlasInt,
-        b: *const f64,
+        b: *const CBlasDouble,
         ldb: CBlasInt,
-        beta: f64,
-        c: *mut f64,
+        beta: CBlasDouble,
+        c: *mut CBlasDouble,
         ldc: CBlasInt,
     );
 
@@ -584,7 +584,7 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_csymm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         m: CBlasInt,
         n: CBlasInt,
@@ -625,7 +625,7 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_zsymm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         m: CBlasInt,
         n: CBlasInt,
@@ -670,11 +670,11 @@ unsafe extern "C" {
         trans: CBlasTranspose,
         n: CBlasInt,
         k: CBlasInt,
-        alpha: f32,
-        a: *const f32,
+        alpha: CBlasFloat,
+        a: *const CBlasFloat,
         lda: CBlasInt,
-        beta: f32,
-        c: *mut f32,
+        beta: CBlasFloat,
+        c: *mut CBlasFloat,
         ldc: CBlasInt,
     );
 
@@ -709,11 +709,11 @@ unsafe extern "C" {
         trans: CBlasTranspose,
         n: CBlasInt,
         k: CBlasInt,
-        alpha: f64,
-        a: *const f64,
+        alpha: CBlasDouble,
+        a: *const CBlasDouble,
         lda: CBlasInt,
-        beta: f64,
-        c: *mut f64,
+        beta: CBlasDouble,
+        c: *mut CBlasDouble,
         ldc: CBlasInt,
     );
 
@@ -822,13 +822,13 @@ unsafe extern "C" {
         trans: CBlasTranspose,
         n: CBlasInt,
         k: CBlasInt,
-        alpha: f32,
-        a: *const f32,
+        alpha: CBlasFloat,
+        a: *const CBlasFloat,
         lda: CBlasInt,
-        b: *const f32,
+        b: *const CBlasFloat,
         ldb: CBlasInt,
-        beta: f32,
-        c: *mut f32,
+        beta: CBlasFloat,
+        c: *mut CBlasFloat,
         ldc: CBlasInt,
     );
 
@@ -863,13 +863,13 @@ unsafe extern "C" {
         trans: CBlasTranspose,
         n: CBlasInt,
         k: CBlasInt,
-        alpha: f64,
-        a: *const f64,
+        alpha: CBlasDouble,
+        a: *const CBlasDouble,
         lda: CBlasInt,
-        b: *const f64,
+        b: *const CBlasDouble,
         ldb: CBlasInt,
-        beta: f64,
-        c: *mut f64,
+        beta: CBlasDouble,
+        c: *mut CBlasDouble,
         ldc: CBlasInt,
     );
 
@@ -987,16 +987,16 @@ unsafe extern "C" {
     /// * `ldb` - Leading dimension of b. Must be at least $\max(1, m)$.
     pub fn cblas_strmm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f32,
-        a: *const f32,
+        alpha: CBlasFloat,
+        a: *const CBlasFloat,
         lda: CBlasInt,
-        b: *mut f32,
+        b: *mut CBlasFloat,
         ldb: CBlasInt,
     );
 
@@ -1027,16 +1027,16 @@ unsafe extern "C" {
     /// * `ldb` - Leading dimension of b. Must be at least $\max(1, m)$.
     pub fn cblas_dtrmm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f64,
-        a: *const f64,
+        alpha: CBlasDouble,
+        a: *const CBlasDouble,
         lda: CBlasInt,
-        b: *mut f64,
+        b: *mut CBlasDouble,
         ldb: CBlasInt,
     );
 
@@ -1067,10 +1067,10 @@ unsafe extern "C" {
     /// * `ldb` - Leading dimension of b. Must be at least $\max(1, m)$.
     pub fn cblas_ctrmm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
         alpha: *const CBlasVoid,
@@ -1107,10 +1107,10 @@ unsafe extern "C" {
     /// * `ldb` - Leading dimension of b. Must be at least $\max(1, m)$.
     pub fn cblas_ztrmm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
         alpha: *const CBlasVoid,
@@ -1152,16 +1152,16 @@ unsafe extern "C" {
     /// * `ldb` - Leading dimension of b. Must be at least $\max(1, m)$.
     pub fn cblas_strsm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f32,
-        a: *const f32,
+        alpha: CBlasFloat,
+        a: *const CBlasFloat,
         lda: CBlasInt,
-        b: *mut f32,
+        b: *mut CBlasFloat,
         ldb: CBlasInt,
     );
 
@@ -1192,16 +1192,16 @@ unsafe extern "C" {
     /// * `ldb` - Leading dimension of b. Must be at least $\max(1, m)$.
     pub fn cblas_dtrsm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f64,
-        a: *const f64,
+        alpha: CBlasDouble,
+        a: *const CBlasDouble,
         lda: CBlasInt,
-        b: *mut f64,
+        b: *mut CBlasDouble,
         ldb: CBlasInt,
     );
 
@@ -1232,10 +1232,10 @@ unsafe extern "C" {
     /// * `ldb` - Leading dimension of b. Must be at least $\max(1, m)$.
     pub fn cblas_ctrsm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
         alpha: *const CBlasVoid,
@@ -1272,10 +1272,10 @@ unsafe extern "C" {
     /// * `ldb` - Leading dimension of b. Must be at least $\max(1, m)$.
     pub fn cblas_ztrsm(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
         alpha: *const CBlasVoid,
@@ -1315,19 +1315,19 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_strmm_oop(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f32,
-        a: *const f32,
+        alpha: CBlasFloat,
+        a: *const CBlasFloat,
         lda: CBlasInt,
-        b: *const f32,
+        b: *const CBlasFloat,
         ldb: CBlasInt,
-        beta: f32,
-        c: *mut f32,
+        beta: CBlasFloat,
+        c: *mut CBlasFloat,
         ldc: CBlasInt,
     );
 
@@ -1361,19 +1361,19 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_dtrmm_oop(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f64,
-        a: *const f64,
+        alpha: CBlasDouble,
+        a: *const CBlasDouble,
         lda: CBlasInt,
-        b: *const f64,
+        b: *const CBlasDouble,
         ldb: CBlasInt,
-        beta: f64,
-        c: *mut f64,
+        beta: CBlasDouble,
+        c: *mut CBlasDouble,
         ldc: CBlasInt,
     );
 
@@ -1407,10 +1407,10 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_ctrmm_oop(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
         alpha: *const CBlasVoid,
@@ -1453,10 +1453,10 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_ztrmm_oop(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
         alpha: *const CBlasVoid,
@@ -1498,19 +1498,19 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_strsm_oop(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f32,
-        a: *const f32,
+        alpha: CBlasFloat,
+        a: *const CBlasFloat,
         lda: CBlasInt,
-        b: *const f32,
+        b: *const CBlasFloat,
         ldb: CBlasInt,
-        beta: f32,
-        c: *mut f32,
+        beta: CBlasFloat,
+        c: *mut CBlasFloat,
         ldc: CBlasInt,
     );
 
@@ -1543,19 +1543,19 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_dtrsm_oop(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
-        alpha: f64,
-        a: *const f64,
+        alpha: CBlasDouble,
+        a: *const CBlasDouble,
         lda: CBlasInt,
-        b: *const f64,
+        b: *const CBlasDouble,
         ldb: CBlasInt,
-        beta: f64,
-        c: *mut f64,
+        beta: CBlasDouble,
+        c: *mut CBlasDouble,
         ldc: CBlasInt,
     );
 
@@ -1588,10 +1588,10 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_ctrsm_oop(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
         alpha: *const CBlasVoid,
@@ -1633,10 +1633,10 @@ unsafe extern "C" {
     /// * `ldc` - Leading dimension of c. Must be at least $\max(1, m)$.
     pub fn cblas_ztrsm_oop(
         layout: CBlasLayout,
-        side: CblasSide,
+        side: CBlasSide,
         uplo: CBlasUplo,
         transa: CBlasTranspose,
-        diag: CblasSide,
+        diag: CBlasDiag,
         m: CBlasInt,
         n: CBlasInt,
         alpha: *const CBlasVoid,
