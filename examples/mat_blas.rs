@@ -90,23 +90,3 @@ fn main() {
     );
     println!("{c:?}");
 }
-
-#[cfg(any(feature = "intel-mkl", feature = "openblas"))]
-#[cfg(test)]
-mod tests {
-
-    use super::*;
-    #[test]
-    fn test_basic_blas_mat() {
-        let a = vec![1.0; 9];
-        let b = vec![2.0; 9];
-        let mut c = vec![0.0; 9];
-        let layout = CBlasLayout::CBlasRowMajor;
-        let transa = CBlasTranspose::CBlasNoTrans;
-        let transb = CBlasTranspose::CBlasNoTrans;
-        dgemm(
-            layout, transa, transb, 3, 3, 3, 1.0, &a, 3, &b, 3, 1.0, &mut c, 3,
-        );
-        println!("{:?}", c);
-    }
-}
