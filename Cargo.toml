@@ -12,11 +12,13 @@ homepage = "https://github.com/shaijing/blas-rs"
 repository = "https://github.com/shaijing/blas-rs"
 
 [features]
-default = ["ilp64"]
+default = ["openblas", "ilp64"]
 ilp64 = []
 lp64 = []
 openblas = []
 intel-mkl = []
+netlib = []
+accelerate = []
 static = []
 system = []
 
